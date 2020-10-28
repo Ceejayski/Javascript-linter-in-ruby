@@ -1,2 +1,12 @@
 #!/usr/bin/env ruby
-$: << File.join(File.dirname(__FILE__), '..', 'bin')
+require "../lib/linter_cops"
+
+js_files = Dir.glob("../**/*.js")
+puts "inspecting #{js_files.length} files"
+js_files.each{|file|
+    js_linters = LinterCop.new(file)
+    js_linters.semicolon_check()
+    print js_linters.error_msg
+}
+
+
