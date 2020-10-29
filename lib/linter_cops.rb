@@ -150,7 +150,12 @@ class LinterCop
     last_line = @file_line.size
     @error_msg << "#{last_line} , linter/Layout: Missing end blank line" unless @file_line[-1].include?("\n") && file_line.size.positive?
     if @file_line[-1] == "\n" && @file_line.size > 0
+      num = -1
+      until @file_line[num] != "\n"
         @error_msg << "#{last_line + 1} , linter/Layout: Unexpected blank line"
+        num -= 1
+        last_line -= 1
+      end
     end
   end
 
