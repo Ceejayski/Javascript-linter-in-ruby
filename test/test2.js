@@ -1,8 +1,8 @@
 class @Car2sd {
     constructor(brand,model,year){
         this.brand = brand;
-        this.model = model;
-        this.year =year
+        this.model = model;  
+        this.year =year  
     }
 
     displayCarInformation() {
@@ -22,3 +22,5 @@ class CarService{
 }
 {}{}}
 ()(
+[
+
