@@ -142,7 +142,7 @@ class LinterCop
         index = lines.split(' ').find_index(str)
         class_name = lines.split(' ')[index + 1]
         first_letter = class_name[0]
-        if first_letter != first_letter.capitalize || class_name.match(/[[^0-9A-Za-z{}()]]/) || first_letter.to_i != 0 || first_letter == "0"
+        if first_letter != first_letter.capitalize || class_name.match(/[[^0-9A-Za-z{}()]]/) || first_letter.to_i != 0 || first_letter == '0'
           error_msg << "#{line} , Linter/Style: classname should contain be camel casing, must start with a string and must not contain any special character"
         end
       end
