@@ -5,11 +5,10 @@ This project is a Javascript linter that flags basic errors to include readablit
 
 Listed below are the methods built in this project:
 
+-   `file_empty?`
 -   `semicolon_check` 
 -   `trailing_space`
 -   `parenthesis_check`
--   `bracket_check` 
--   `array_check`
 -   `check_classname`
 -   `last_line_space_check`
 -   `error_sort`

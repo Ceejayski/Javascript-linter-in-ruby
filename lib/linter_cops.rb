@@ -53,12 +53,12 @@ class LinterCop
     end
     if open_paren.positive?
       stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unclosed parenthensis (#{opening_tag}) '#{@file_data[x - 1]}"
+        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unclosed parenthensis '#{opening_tag}'"
       end
     end
     if unclosed.positive?
       close_stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unexpected (#{closing_tag}) '#{@file_data[x - 1]}'"
+        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unexpected '#{closing_tag}'"
       end
     end
   end

@@ -16,16 +16,16 @@ describe 'LinterCop' do
     expect(lint_spec.error_sort(lint_spec.error_msg)[0][0]).to eql('4')
   end
   it '#check_for_balanced_parenthesis' do
-    lint_spec.parenthesis_check
-    expect(lint_spec.error_sort(lint_spec.error_msg)[0]).to eql("23 , Linter/beforeStatementContinuationChars:  Unexpected (}) '{}{}}'")
+    lint_spec.parenthesis_check('{', '}')
+    expect(lint_spec.error_sort(lint_spec.error_msg)[0]).to eql("23 , Linter/beforeStatementContinuationChars:  Unexpected '}'")
   end
   it '#check_for_balanced_bracket' do
-    lint_spec.bracket_check
-    expect(lint_spec.error_sort(lint_spec.error_msg)[0]).to eql("24 , Linter/beforeStatementContinuationChars: Unclosed bracket ( ( ) '()('")
+    lint_spec.parenthesis_check('(', ')')
+    expect(lint_spec.error_sort(lint_spec.error_msg)[0]).to eql("24 , Linter/beforeStatementContinuationChars:  Unclosed parenthensis '('")
   end
   it '#check_for_balanced_angle_bracket' do
-    lint_spec.array_check
-    expect(lint_spec.error_sort(lint_spec.error_msg)[0]).to eql("25 , Linter/beforeStatementContinuationChars: Unclosed array ([) '['")
+    lint_spec.parenthesis_check('[', ']')
+    expect(lint_spec.error_sort(lint_spec.error_msg)[0]).to eql("25 , Linter/beforeStatementContinuationChars:  Unclosed parenthensis '['")
   end
   it '#check_for_valid_classname' do
     lint_spec.check_classname
