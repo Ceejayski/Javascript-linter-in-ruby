@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+$: << File.join(File.dirname(__FILE__), "..", "lib")
 require '../lib/linter_cops'
 
 js_files = Dir.glob('../**/*.js')
