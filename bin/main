@@ -12,7 +12,7 @@ else
   js_files.each do |file|
     js_linters = LinterCop.new(file)
     6.times do |i|
-      print "#{file} Checking" + ('.' * (i % 3)) + "  \r"
+      print "#{file} Checking#{'.' * (i % 4)}   \r"
       $stdout.flush
       sleep(0.5)
     end
