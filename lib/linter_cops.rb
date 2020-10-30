@@ -11,20 +11,20 @@ class LinterCop
   end
 
   def empty_file?
-    return @file_reader.split(" ").empty?
+    @file_reader.split(' ').empty?
   end
-  
+
   def semicolon_check
     @file_data.each do |lines|
       line = @file_data.find_index(lines) + 1
-      (@error_msg << "#{line} , Linter/beforeStatementContinuationChars: Missing semicolon(;) '#{lines.strip}'") unless ((lines.split('')) & ['{', '}','[','(',';']).any? || lines.empty?
+      (@error_msg << "#{line} , Linter/beforeStatementContinuationChars: Missing semicolon(;) '#{lines.strip}'") unless ((lines.split('')) & ['{', '}', '[', '(', ';']).any? || lines.empty?
     end
   end
 
   def trailing_space
     @file_data.each do |lines|
       line = @file_data.find_index(lines) + 1
-     (@error_msg << "#{line} linter/layout: has an error of trailing space on '#{lines.strip}' ") if lines.split('')[-1] == ' '
+      (@error_msg << "#{line} linter/layout: has an error of trailing space on '#{lines.strip}' ") if lines.split('')[-1] == ' '
     end
   end
 
@@ -153,7 +153,7 @@ class LinterCop
     # !~ /\S/
     last_line = @file_line.size
     @error_msg << "#{last_line} , linter/Layout: Missing end blank line" unless @file_line[-1].include?("\n") && file_line.size.positive?
-    if @file_line[-1] == "\n" && @file_line.size > 0
+    if @file_line[-1] == "\n" && @file_line.size.positive?
       num = -1
       until @file_line[num] != "\n"
         @error_msg << "#{last_line + 1} , linter/Layout: Unexpected blank line"
@@ -164,10 +164,8 @@ class LinterCop
   end
 
   def error_sort(array)
-    error = array.sort_by{
-        |s|
-         s.scan(/\d+/).first.to_i
-    }
-    error
+    array.sort_by do |s|
+      s.scan(/\d+/).first.to_i
+    end
   end
 end
