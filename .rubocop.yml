@@ -29,6 +29,8 @@ Style/AndOr:
   Enabled: false
 Style/GuardClause:
   Enabled: false
+Style/RedundantParentheses:
+  Enabled: false
 Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
