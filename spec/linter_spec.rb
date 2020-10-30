@@ -2,10 +2,15 @@ require_relative '../lib/linter_cops.rb'
 describe 'LinterCop' do
     let(:lint_spec) { LinterCop.new('test/test2.js') }
 
+    it "#check_if_file_is_empty" do
+        expect(lint_spec.empty_file?).to eql(false)
+    end
+
     it "#check_missing_semi_colon" do
         lint_spec.semicolon_check
         expect(lint_spec.error_msg[0][0]).to eql("5")
     end
+
     it "#check_trailing_space" do
         lint_spec.trailing_space
         expect(lint_spec.error_sort(lint_spec.error_msg)[0][0]).to eql("4")

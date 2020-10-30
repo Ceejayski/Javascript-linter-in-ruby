@@ -10,6 +10,10 @@ class LinterCop
     @error_msg = []
   end
 
+  def empty_file?
+    return @file_reader.split(" ").empty?
+  end
+  
   def semicolon_check
     @file_data.each do |lines|
       line = @file_data.find_index(lines) + 1
