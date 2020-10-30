@@ -21,9 +21,9 @@ else
 
     js_linters.semicolon_check
     js_linters.trailing_space
-    js_linters.parenthesis_check
-    js_linters.bracket_check
-    js_linters.array_check
+    js_linters.parenthesis_check("{","}")
+    js_linters.parenthesis_check("(",")")
+    js_linters.parenthesis_check("[","]")
     js_linters.check_classname
     js_linters.last_line_space_check
     js_linters.error_sort(js_linters.error_msg).each do |err|

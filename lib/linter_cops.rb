@@ -28,7 +28,7 @@ class LinterCop
     end
   end
 
-  def parenthesis_check
+  def parenthesis_check(opening_tag, closing_tag)
     open_paren = 0
     unclosed = 0
     stack = []
@@ -37,10 +37,10 @@ class LinterCop
       line = @file_data.find_index(lines) + 1
       lines.split('').each do |str|
         case str
-        when '{'
+        when opening_tag
           open_paren += 1
           stack << line
-        when '}'
+        when closing_tag
           if open_paren.positive?
             open_paren -= 1
             stack.pop
@@ -53,82 +53,12 @@ class LinterCop
     end
     if open_paren.positive?
       stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unclosed parenthensis ({) '#{@file_data[x - 1]}"
+        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unclosed parenthensis (#{opening_tag}) '#{@file_data[x - 1]}"
       end
     end
     if unclosed.positive?
       close_stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unexpected (}) '#{@file_data[x - 1]}'"
-      end
-    end
-  end
-
-  def bracket_check
-    open_paren = 0
-    unclosed = 0
-    stack = []
-    close_stack = []
-    @file_data.each do |lines|
-      line = @file_data.find_index(lines) + 1
-      lines.split('').each do |str|
-        case str
-        when '('
-          open_paren += 1
-          stack << line
-        when ')'
-          if open_paren.positive?
-            open_paren -= 1
-            stack.pop
-          elsif open_paren.zero?
-            unclosed += 1
-            close_stack << line
-          end
-        end
-      end
-    end
-    if open_paren.positive?
-      stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars: Unclosed bracket ( ( ) '#{@file_data[x - 1]}'"
-      end
-    end
-    if unclosed.positive?
-      close_stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars: Unexpected ( ')' ) '#{@file_data[x - 1]}'"
-      end
-    end
-  end
-
-  def array_check
-    open_paren = 0
-    unclosed = 0
-    stack = []
-    close_stack = []
-    @file_data.each do |lines|
-      line = @file_data.find_index(lines) + 1
-      lines.split('').each do |str|
-        case str
-        when '['
-          open_paren += 1
-          stack << line
-        when ']'
-          if open_paren.positive?
-            open_paren -= 1
-            stack.pop
-          elsif open_paren.zero?
-            unclosed += 1
-            close_stack << line
-          end
-        end
-      end
-    end
-    if open_paren.positive?
-      stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars: Unclosed array ([) '#{@file_data[x - 1]}'"
-      end
-    end
-    if unclosed.positive?
-      close_stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars: Unexpected (]) '#{@file_data[x - 1]}'"
+        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unexpected (#{closing_tag}) '#{@file_data[x - 1]}'"
       end
     end
   end
