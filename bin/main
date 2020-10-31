@@ -1,11 +1,29 @@
 #!/usr/bin/env ruby
-require '../lib/linter_cops'
+require_relative '../lib/linter_cops'
 
-js_files = Dir.glob('../**/*.js')
-puts "inspecting #{js_files.length} file(s)"
+if ARGV.empty?
+  puts 'There are no command line arguments'
+  js_files = []
+else
+  if ARGV.first != '-all'
+    if File.extname(ARGV.first) == '.js' && File.exist?(ARGV.first)
+      js_files = Dir.glob(ARGV.first)
+    else
+      puts "#{ARGV.first} not valid"
+    end
+  else
+    js_files = if Dir.pwd.split('/')[-1] == 'bin'
+                 Dir.glob('../**/*.js')
+               else
+                 Dir.glob('**/*.js')
+               end
+    puts "inspecting #{js_files.length} file(s)"
+  end
+end
+
 sleep(0.8)
 if js_files.empty?
-  puts 'there are no available Javascript files'
+  puts 'No available Javascript files'
 else
   error_count = 0
   error_files = {}
