@@ -17,7 +17,9 @@ class LinterCop
   def semicolon_check
     @file_data.each do |lines|
       line = @file_data.find_index(lines) + 1
-      (@error_msg << "#{line} , Linter/beforeStatementContinuationChars: Missing semicolon(;) '#{lines.strip}'") unless ((lines.split('')) & ['{', '}', '[', ';']).any?|| lines.include?("class")|| lines.empty?
+      unless ['{', '}', '[', '(', ';'].include?(lines.gsub(/\s+/, '')[-1]) || lines.include?('class') || lines.empty?
+        (@error_msg << "#{line} , Linter/beforeStatementContinuationChars: Missing semicolon(;) '#{lines.strip}'")
+      end
     end
   end
 
@@ -98,5 +100,4 @@ class LinterCop
       s.scan(/\d+/).first.to_i
     end
   end
-
 end
