@@ -77,9 +77,11 @@ class 2CarService{ #Invalid Classname
     3. Run rspec --init
     3. Run rspec in the terminal
 
+# Video Presentation
+
+- View the video presentation [here](https://www.loom.com/share/e10bc7889fba4f6f92ee72c326b8a17f)
+
 ## How to Run the Program
-
-
 
 ```
 $ git clone https://github.com/Ceejayski/Javascript-linter-in-ruby
