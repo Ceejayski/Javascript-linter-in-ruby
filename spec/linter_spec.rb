@@ -2,15 +2,21 @@ require_relative '../lib/linter_cops'
 describe 'LinterCop' do
   let(:lint_spec) { LinterCop.new('test/test2.js') }
   let(:lint_spec2) { LinterCop.new('test/test.js') }
+  let(:lint_spec3) { LinterCop.new('test/test3.js') }
 
   it '#check_if_file_is_empty' do
     expect(lint_spec.empty_file?).to eql(false)
+  end
+
+  it '#check_if_file_is_empty' do
+    expect(lint_spec3.empty_file?).to eql(true)
   end
 
   it '#check_missing_semi_colon_method_fails' do
     lint_spec.semicolon_check
     expect(lint_spec.error_msg[0][0]).to eql('5')
   end
+
   it '#check_missing_semi_colon_method_passes' do
     lint_spec.semicolon_check
     expect(lint_spec2.error_msg).to match_array([])
@@ -55,5 +61,9 @@ describe 'LinterCop' do
 
   it '#sort_error_array_according_to_fileline' do
     expect(lint_spec.error_sort(%w[9 2 3 7 4 9 8 5 2])).to eql(%w[2 2 3 4 5 7 8 9 9])
+  end
+
+  it 'Failed_sort_error_array_according_to_fileline' do
+    expect(lint_spec.error_sort(%w[9 2 3 7 4 9 8 5 2])).to_not eql(%w[9 2 3 7 4 9 8 5 2])
   end
 end

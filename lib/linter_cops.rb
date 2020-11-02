@@ -58,10 +58,10 @@ class LinterCop
         @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unclosed parenthensis '#{opening_tag}'"
       end
     end
-    if unclosed.positive?
-      close_stack.each do |x|
-        @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unexpected '#{closing_tag}'"
-      end
+    return unless unclosed.positive?
+
+    close_stack.each do |x|
+      @error_msg << "#{x} , Linter/beforeStatementContinuationChars:  Unexpected '#{closing_tag}'"
     end
   end
 
@@ -84,13 +84,13 @@ class LinterCop
   def last_line_space_check
     last_line = @file_line.size
     @error_msg << "#{last_line} , linter/Layout: Missing end blank line" unless @file_line[-1].include?("\n") && file_line.size.positive?
-    if @file_line[-1] == "\n" && @file_line.size.positive?
-      num = -1
-      until @file_line[num] != "\n"
-        @error_msg << "#{last_line + 1} , linter/Layout: Unexpected blank line"
-        num -= 1
-        last_line -= 1
-      end
+    return unless @file_line[-1] == "\n" && @file_line.size.positive?
+
+    num = -1
+    until @file_line[num] != "\n"
+      @error_msg << "#{last_line + 1} , linter/Layout: Unexpected blank line"
+      num -= 1
+      last_line -= 1
     end
   end
 

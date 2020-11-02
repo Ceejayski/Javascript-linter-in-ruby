@@ -1,24 +1,20 @@
 #!/usr/bin/env ruby
 require_relative '../lib/linter_cops'
 
+js_files = []
 if ARGV.empty?
   puts 'There are no command line arguments'
-  js_files = []
+elsif ARGV.first != '-all' && File.extname(ARGV.first) == '.js' && File.exist?(ARGV.first)
+  js_files = Dir.glob(ARGV.first)
+elsif ARGV.first != '-all' && (File.extname(ARGV.first) != '.js' || !File.exist?(ARGV.first))
+  puts "#{ARGV.first} not valid"
 else
-  if ARGV.first != '-all'
-    if File.extname(ARGV.first) == '.js' && File.exist?(ARGV.first)
-      js_files = Dir.glob(ARGV.first)
-    else
-      puts "#{ARGV.first} not valid"
-    end
-  else
-    js_files = if Dir.pwd.split('/')[-1] == 'bin'
-                 Dir.glob('../**/*.js')
-               else
-                 Dir.glob('**/*.js')
-               end
-    puts "inspecting #{js_files.length} file(s)"
-  end
+  js_files = if Dir.pwd.split('/')[-1] == 'bin'
+               Dir.glob('../**/*.js')
+             else
+               Dir.glob('**/*.js')
+             end
+  puts "inspecting #{js_files.length} file(s)"
 end
 
 sleep(0.8)
@@ -34,7 +30,7 @@ else
       $stdout.flush
       sleep(0.5)
     end
-    puts "#{js_linters.file_name} is Empty" if js_linters.empty_file?
+    puts "#{js_linters.file_name} is Empty or contains no code" if js_linters.empty_file?
     next if js_linters.empty_file?
 
     js_linters.semicolon_check
