@@ -91,7 +91,7 @@ This linter checks all Javascript file(.js) within the folder, follow the steps 
 
 - go to the folder and copy out the bin and lib folder into your project directory
 
-- run ```./bin/main <path of file checking>``` to check a particular file eg. ```./bin/main test/test.js``` OR run ```./bin/main -all``` to check all js files in the directory
+- run ```./bin/main <file-path>``` to check a particular file eg. ```./bin/main test/test.js``` OR run ```./bin/main -all``` to check all js files in the directory
 
 - Good job you are now setup and ready to Check all your javascript file in project directory for linter error 👌🙌
 
