@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+require_relative '../lib/linter_cops'
+
+js_files = []
+if ARGV.empty?
+  puts 'There are no command line arguments'
+elsif ARGV.first != '-all' && File.extname(ARGV.first) == '.js' && File.exist?(ARGV.first)
+  js_files = Dir.glob(ARGV.first)
+elsif ARGV.first != '-all' && (File.extname(ARGV.first) != '.js' || !File.exist?(ARGV.first))
+  puts "#{ARGV.first} not valid"
+else
+  js_files = if Dir.pwd.split('/')[-1] == 'bin'
+               Dir.glob('../**/*.js')
+             else
+               Dir.glob('**/*.js')
+             end
+  puts "inspecting #{js_files.length} file(s)"
+end
+
+sleep(0.8)
+if js_files.empty?
+  puts 'No available Javascript files'
+else
+  error_count = 0
+  error_files = {}
+  js_files.each do |file|
+    js_linters = LinterCop.new(file)
+    6.times do |i|
+      print "#{file} Checking#{'.' * (i % 4)}   \r"
+      $stdout.flush
+      sleep(0.5)
+    end
+    puts "#{js_linters.file_name} is Empty or contains no code" if js_linters.empty_file?
+    next if js_linters.empty_file?
+
+    js_linters.semicolon_check
+    js_linters.trailing_space
+    js_linters.parenthesis_check('{', '}')
+    js_linters.parenthesis_check('(', ')')
+    js_linters.parenthesis_check('[', ']')
+    js_linters.check_classname
+    js_linters.last_line_space_check
+    js_linters.error_sort(js_linters.error_msg).each do |err|
+      puts "#{js_linters.file}:#{err}"
+      error_count += 1
+      error_files[js_linters.file_name] = 'err'
+    end
+  end
+
+  puts "There are #{error_count} lint errors from #{error_files.length}/#{js_files.length} js files"
+end
