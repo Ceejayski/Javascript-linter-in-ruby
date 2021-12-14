@@ -1,7 +1,7 @@
 # Javascript-linter-in-ruby
 Microverse Capstone
 
-This project is a Javascript linter that flags basic errors to include readablity.
+This project is a Javascript linter that flags basic errors to improve readablity.
 
 Listed below are the methods built in this project:
 
